@@ -1,7 +1,7 @@
 'use client'
+import { useNavigate } from 'react-router-dom'
 import { Button } from './ui/button'
 import { LogOut, ChevronDown } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 
 interface DashboardHeaderProps {
   currentView: 'previous audit' | 'latest audit'
@@ -12,16 +12,16 @@ export function DashboardHeader({
   currentView,
   onViewChange,
 }: DashboardHeaderProps) {
-  const router = useRouter()
+  const navigate = useNavigate()
 
   const handleLogout = () => {
-    localStorage.removeItem("user")
-    router.push("/")
+    localStorage.removeItem("accessToken")
+    navigate("/login")
   }
 
   const tabs = [
     { label: 'Previous Audit', value: 'previous audit' as const },
-    { label: 'Latest Audit', value: 'latest audit' as const},
+    { label: 'Latest Audit', value: 'latest audit' as const },
   ]
 
   return (
@@ -38,11 +38,10 @@ export function DashboardHeader({
             <button
               key={tab.value}
               onClick={() => onViewChange(tab.value)}
-              className={`px-3 sm:px-4 py-2 text-xl font-medium rounded-md transition-all duration-200 ${
-                currentView === tab.value
-                  ? 'bg-black/5 text-black/70 mt-10'
-                  : 'text-gray-400'
-              }`}
+              className={`px-3 sm:px-4 py-2 text-xl font-medium rounded-md transition-all duration-200 ${currentView === tab.value
+                ? 'bg-black/5 text-black/70 mt-10'
+                : 'text-gray-400'
+                }`}
             >
               {tab.label}
             </button>

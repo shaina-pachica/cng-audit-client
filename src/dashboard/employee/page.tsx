@@ -2,27 +2,13 @@
 
 import { EmployeeDashboard } from "./employee-dashboard"
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
 import { DashboardHeader } from "../../components/header"
 import { DeveloperCredit } from '../../components/devcredit';
 
 export default function EmployeeDashboardPage() {
-  const router = useRouter()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [currentView, setCurrentView] = useState<"previous audit" | "latest audit">("latest audit")
-  const [showUploadModal, setShowUploadModal] = useState(false);
-  const [user, setUser] = useState<any>(null);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (!token) {
-      router.push("/")
-    } else {
-      setIsAuthenticated(true)
-    }
-  }, [router])
-
-  if (!isAuthenticated) return null
 
   return (
     <div className="min-h-screen bg-black/5 flex flex-col">
@@ -42,7 +28,7 @@ export default function EmployeeDashboardPage() {
         </div>
       </main>
       {/* Developer Credit */}
-            <DeveloperCredit />
+      <DeveloperCredit />
     </div>
   );
 }

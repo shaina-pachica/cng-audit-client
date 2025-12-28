@@ -1,4 +1,3 @@
-'use client';
 
 import { useState, useEffect } from 'react';
 import { Upload, Edit3 } from 'lucide-react';
@@ -12,7 +11,6 @@ import {
   CardTitle,
 } from '../../components/ui/card';
 
-import { DashboardHeader } from '../../components/header';
 import { TransactionTable } from '../../components/transaction-table';
 import { TransactionFilterSearch } from '../../components/transaction-filter-search';
 import { BalanceSummaryCards } from '../../components/balance-summary-cards';
@@ -118,28 +116,28 @@ export function EmployeeDashboard() {
     <div className="pt-16 pb-8 px-4 min-h-screen">
       <div className="max-w-7xl mx-auto space-y-8">
         <DashboardPageHeader
-  title={`${user?.username || 'Employee'}'s Dashboard`}
-  actions={
-    <>
-      <Button
-        variant="secondary"
-        onClick={() => setShowUploadModal(true)}
-        className="gap-2"
-      >
-        <Upload className="w-4 h-4" />
-        Upload PDF
-      </Button>
-      <Button
-        variant="outline"
-        onClick={() => setShowEnterDataModal(true)}
-        className="gap-2"
-      >
-        <Edit3 className="w-4 h-4" />
-        Enter Data
-      </Button>
-    </>
-  }
-/>
+          title={`${user?.username || 'Employee'}'s Dashboard`}
+          actions={
+            <>
+              <Button
+                variant="secondary"
+                onClick={() => setShowUploadModal(true)}
+                className="gap-2"
+              >
+                <Upload className="w-4 h-4" />
+                Upload PDF
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => setShowEnterDataModal(true)}
+                className="gap-2"
+              >
+                <Edit3 className="w-4 h-4" />
+                Enter Data
+              </Button>
+            </>
+          }
+        />
 
         <BalanceSummaryCards
           currency="₱"
@@ -154,7 +152,7 @@ export function EmployeeDashboard() {
           description="Filter your transactions by type or reference"
           showEmployeeFilter={false}
           selectedEmployee="all"
-          onEmployeeChange={() => {}}
+          onEmployeeChange={() => { }}
           selectedType={selectedType}
           onTypeChange={setSelectedType}
           searchRef={searchRef}

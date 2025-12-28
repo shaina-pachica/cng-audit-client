@@ -22,6 +22,7 @@ import { useTransactionFilters } from '../../hooks/use-transaction-filters';
 import { useTransactionStats } from '../../hooks/use-transaction-stats';
 import { DashboardPageHeader } from '../../components/dashboard-page-header';
 import { Button } from '../../components/ui/button';
+import { CSVUploadModal } from '../../components/csv-upload-modal';
 
 
 
@@ -40,6 +41,7 @@ export function OwnerDashboard() {
   const [selectedEmployee, setSelectedEmployee] = useState('all');
   const [selectedType, setSelectedType] = useState('all');
   const [searchRef, setSearchRef] = useState('');
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
   useEffect(() => {
     setEmployees([
@@ -86,7 +88,11 @@ export function OwnerDashboard() {
           title="Owner Dashboard"
           actions={
             <>
-              <Button variant="secondary" className="gap-2">
+              <Button
+                variant="secondary"
+                onClick={() => setShowUploadModal(true)}
+                className="gap-2"
+              >
                 <Upload className="w-4 h-4" />
                 Upload PDF
               </Button>
@@ -97,7 +103,6 @@ export function OwnerDashboard() {
             </>
           }
         />
-
 
         <BalanceSummaryCards
           currency="$"
@@ -148,6 +153,12 @@ export function OwnerDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      <CSVUploadModal
+        isOpen={showUploadModal}
+        onClose={() => setShowUploadModal(false)}
+        onUpload={(txns) => setTransactions((prev) => [...prev, ...txns])}
+      />
 
       <DeveloperCredit />
     </div>

@@ -8,12 +8,15 @@ interface RoleRouteProps {
 }
 
 export default function RoleRoute({ role, children }: RoleRouteProps) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
+
+  if (loading) return null
 
   if (!user) {
     return <Navigate to="/login" replace />;
   }
+
 
   const primaryRole = user.roles.includes("Owner") ? "Owner" : "Employee";
   const expectedBasePath = primaryRole === "Owner" ? "/owner" : "/employee";

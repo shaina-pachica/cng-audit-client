@@ -1,5 +1,5 @@
 import { keepPreviousData, QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./provider/AuthProvider";
 import RoleRoute from "./lib/RoleRoute";
 import OwnerDashboardPage from "./dashboard/owner/page";
@@ -22,6 +22,7 @@ export default function App() {
       <BrowserRouter>
         <AuthProvider>
           <Routes>
+            <Route path="/" element={<Navigate to="/login" replace />} />
             <Route
               path="/owner/*"
               element={
@@ -38,7 +39,7 @@ export default function App() {
                 </RoleRoute>
               }
             />
-            <Route element={<Login />} path="/login" index />
+            <Route element={<Login />} path="/login" />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

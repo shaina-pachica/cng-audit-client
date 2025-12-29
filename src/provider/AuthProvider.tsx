@@ -19,6 +19,7 @@ type AuthContextProps = {
   setToken: (token: string) => void | null;
   setUser: (user: User) => void | null
   logout: () => Promise<void>;
+  loading: boolean
 };
 
 const AuthContext = createContext<AuthContextProps | null>(null);
@@ -34,6 +35,7 @@ export function useAuth() {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true)
   const queryClient = useQueryClient();
   const navigate = useNavigate()
 
@@ -45,7 +47,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         credentials: "include",
       });
 
-      if (!res.ok) throw new Error("Failed to refresh token");
+      if (!res.ok) return null
       const data = await res.json();
 
       return data.accessToken;
@@ -79,6 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     (async () => {
       const newToken = await refreshAuth();
+      setLoading(false)
       if (newToken) {
         setToken(newToken);
       }
@@ -91,6 +94,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setToken,
       setUser,
       logout,
+      loading
     }),
     [user, token, setToken, logout]
   );

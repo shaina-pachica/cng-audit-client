@@ -22,6 +22,7 @@ import { useTransactionFilters } from '../../hooks/use-transaction-filters';
 import { useTransactionStats } from '../../hooks/use-transaction-stats';
 import { DashboardPageHeader } from '../../components/dashboard-page-header';
 import { Button } from '../../components/ui/button';
+import useStats from '@/services/dashboard/useStats';
 
 
 const STARTING_BALANCE = 10000;
@@ -112,6 +113,8 @@ export function EmployeeDashboard() {
     (t) => t.amount
   );
 
+  const { data } = useStats(2, 'latest')
+
   return (
     <div className="pt-16 pb-8 px-4 min-h-screen">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -141,10 +144,10 @@ export function EmployeeDashboard() {
 
         <BalanceSummaryCards
           currency="₱"
-          startingBalance={STARTING_BALANCE}
-          inbound={stats.inbound}
-          outbound={stats.outbound}
-          transactionCount={stats.transactionCount}
+          startingBalance={data?.stats?.starting_balance || 0}
+          inbound={data?.stats?.credit || 0}
+          outbound={data?.stats?.debit || 0}
+          transactionCount={data?.stats?.total || 0}
         />
 
         <TransactionFilterSearch
